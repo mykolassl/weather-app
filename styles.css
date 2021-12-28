@@ -12,7 +12,19 @@ body {
 main {
     width: 100%;
     height: 100vh;
-    background: black no-repeat center;
+    background: no-repeat center;
     background-size: cover;
     color: white;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.short-info,
+.detailed-info {
+    background-color: blue;
+    height: 100px;
 }
