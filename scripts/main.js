@@ -16,4 +16,4 @@ setInterval(() => {
 
     localTime.innerText = `${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`;
     localDate.innerText = date.toLocaleDateString(undefined, options);
-}, 100)
+}, 800)
