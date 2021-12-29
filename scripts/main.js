@@ -6,12 +6,14 @@ let countryName = document.getElementById("country-name");
 
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
+// Placeholder code
+
 cityName.innerText = 'Vilnius';
 countryName.innerText = "Lithuania";
 
 setInterval(() => {
     const date = new Date();
 
-    localTime.innerText = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    localTime.innerText = `${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`;
     localDate.innerText = date.toLocaleDateString(undefined, options);
 }, 100)

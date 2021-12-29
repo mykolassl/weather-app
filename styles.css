@@ -10,21 +10,49 @@ body {
 }
 
 main {
-    width: 100%;
-    height: 100vh;
-    background: no-repeat center;
-    background-size: cover;
-    color: white;
-}
-
-.content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
+    height: 100vh;
+    background: url(images/bg.jpg) no-repeat center;
+    background-size: cover;
+    color: rgb(255, 255, 255);
 }
 
-.short-info,
-.detailed-info {
-    background-color: blue;
-    height: 100px;
+/* Local time and country container */
+
+.short-info {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 1.5em;
+    padding-inline: 2em;
+}
+
+.location-info-container {
+    text-align: right;
+}
+
+#local-time,
+#city-name {
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+#local-date,
+#country-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 800px) {
+    .short-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .location-info-container,
+    .local-time-container {
+        text-align: center;
+    }
 }
