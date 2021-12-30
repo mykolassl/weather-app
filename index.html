@@ -13,22 +13,24 @@
     </head>
     <body>
         <main>
-            <div class="short-info">
-                <div class="local-time-container">
-                    <div id="local-time"></div>
-                    <div id="local-date"></div>
+            <div class="wrapper">
+                <div class="short-info">
+                    <div class="local-time-container">
+                        <div id="local-time"></div>
+                        <div id="local-date"></div>
+                    </div>
+                    <div class="location-info-container">
+                        <div id="city-name"></div>
+                        <div id="country-name"></div>
+                    </div>
                 </div>
-                <div class="location-info-container">
-                    <div id="city-name"></div>
-                    <div id="country-name"></div>
-                </div>
+                <form class="search-bar">
+                    <input type="text" id="city-input" placeholder="Enter a city name">
+                    <button id="search-button">
+                        <img src="images/search_icon.png">
+                    </button>
+                </form>
             </div>
-            <form class="search-bar">
-                <input type="text" id="city-input" placeholder="Enter a city name">
-                <button id="search-button">
-                    <img src="images/search_icon.png">
-                </button>
-            </form>
             <div class="detailed-info">
                 
             </div>
