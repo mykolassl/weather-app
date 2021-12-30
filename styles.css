@@ -19,11 +19,12 @@ main {
     width: 100%;
     height: 100vh;
     color: rgb(255, 255, 255);
+    overflow: hidden;
 }
 
 .wrapper {
     padding: 2em;
-    height: 55vh;
+    height: 60vh;
     background: url(images/bg.jpg) no-repeat center;
     background-size: cover;
 }
@@ -141,7 +142,7 @@ main {
 /** For tablet devices **/
 @media (min-width: 768px) and (max-width: 1023px) {
     .curves-divider {
-        top: -34px;
+        top: -33px;
     }
 
     .curves-divider svg {
@@ -166,5 +167,5 @@ main {
 
 .detailed-info {
     position: relative;
-    height: 45vh;
+    height: 40vh;
 }
