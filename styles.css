@@ -18,13 +18,12 @@ main {
     flex-direction: column;
     width: 100%;
     height: 100vh;
-    color: rgb(255, 255, 255);
+    color: rgb(17, 17, 17);
     overflow: hidden;
 }
 
 .wrapper {
     padding: 2em;
-    height: 60vh;
     background: url(images/bg.jpg) no-repeat center;
     background-size: cover;
 }
@@ -76,7 +75,7 @@ main {
 .search-bar {
     display: flex;
     align-items: center;
-    margin: 1.5em auto 0 auto;
+    margin: 1.5em auto;
     width: 100%;
     max-width: 40rem;
     border-radius: 20px 3px 20px 3px;
@@ -91,14 +90,14 @@ main {
     height: 2em;
     width: 100%;
     padding: 0.5em;
-    background-color: rgba(255, 255, 255, 0.3);
-    color: white;
+    background-color: rgba(255, 255, 255, 0.4);
+    color: rgb(17, 17, 17);
     font-weight: 800;
     border-radius: 20px 0 0 3px;
 }
 
 #city-input::placeholder {
-    color: white;
+    color: rgb(31, 31, 31);
 }
 
 #search-button {
@@ -106,7 +105,7 @@ main {
     height: 2em;
     width: 2em;
     padding: 0.5em;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 0 3px 20px 0;
     cursor: pointer;
 }
@@ -118,9 +117,9 @@ main {
 
 /* SVG divider */
 
-.curves-divider {
+.curves {
     position: absolute;
-    top: -28px;
+    top: -30px;
     left: 0;
     width: 100%;
     overflow: hidden;
@@ -128,44 +127,20 @@ main {
     transform: rotate(180deg);
 }
 
-.curves-divider svg {
+.curves svg {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
-    height: 28px;
+    height: 35px;
 }
 
-.curves-divider .shape-fill {
-    fill: white;
-}
-
-/** For tablet devices **/
-@media (min-width: 768px) and (max-width: 1023px) {
-    .curves-divider {
-        top: -33px;
-    }
-
-    .curves-divider svg {
-        width: calc(100% + 1.3px);
-        height: 35px;
-    }
-}
-
-/** For mobile devices **/
-@media (max-width: 767px) {
-    .curves-divider {
-        top: -30px;
-    }
-
-    .curves-divider svg {
-        width: calc(110% + 1.3px);
-        height: 31px;
-    }
+.curves .shape-fill {
+    fill: #FFFFFF;
 }
 
 /* Detailed info */
 
 .detailed-info {
     position: relative;
-    height: 40vh;
+    height: 100%;
 }
