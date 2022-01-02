@@ -66,3 +66,17 @@ submitBtn.addEventListener('click', async (e) => {
 
 })
 
+// Selecting weather data time
+
+let links = document.querySelectorAll('.filters ul li a');
+
+links.forEach((el) => {
+    el.addEventListener('click', () => {
+        let selected = document.getElementsByClassName('selected')[0];
+        
+        if(el.classList.contains('selected')) return;
+
+        selected.classList.remove('selected');
+        el.classList.add('selected');
+    })
+})

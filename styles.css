@@ -81,7 +81,8 @@ main {
     border-radius: 20px 3px;
 }
 
-.search-bar:hover {
+.search-bar:hover,
+.search-bar:focus-within {
     outline: 1px solid rgba(255, 255, 255, 0.7);
 }
 
@@ -143,4 +144,56 @@ main {
 .detailed-info {
     position: relative;
     height: 100%;
+    padding: 2em;
+}
+
+.filters ul {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 20rem;
+    margin: 0 auto;
+    list-style: none;
+}
+
+li a {
+    position: relative;
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.65);
+    font-weight: 900;
+}
+
+li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(56, 56, 56);
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+li a:hover::after {
+    width: 100%;
+}
+
+.selected {
+    position: relative;
+    color: black;
+}
+
+.selected::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgb(56, 56, 56);
+    border-radius: 20px;
 }
