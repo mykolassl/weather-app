@@ -4,6 +4,7 @@ const options = {
     month: 'long', 
     day: 'numeric' 
 };
+const token = "3ff9685c0123d30c2f1ffaf700e80bcc";
 
 const cityInput = document.getElementById('city-input');
 const submitBtn = document.getElementById('search-button');
