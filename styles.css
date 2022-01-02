@@ -24,7 +24,7 @@ main {
 
 .wrapper {
     padding: 2em;
-    background: url(images/bg.jpg) no-repeat center;
+    background: url(images/bg_comp.jpg) no-repeat center;
     background-size: cover;
 }
 
