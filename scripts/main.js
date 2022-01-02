@@ -29,7 +29,7 @@ function setTime(offset) {
 
 async function getCoordinates(city) {
     console.log('Fetching data..')
-    const res = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${token}`);
+    const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${token}`);
     return res.json();
 }
 
