@@ -82,15 +82,5 @@ links.forEach((el) => {
     })
 })
 
-// *************** TODO work with example response ************************
 
 // http://openweathermap.org/img/wn/10d@2x.png
-
-//Current temp
-console.log(Math.round(exampleRes.current.temp))
-
-//Feels like
-console.log(Math.round(exampleRes.current.feels_like))
-
-//Humidity
-console.log(`${Math.round(exampleRes.current.humidity)}%`)
