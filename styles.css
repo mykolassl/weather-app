@@ -17,9 +17,8 @@ main {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     color: rgb(17, 17, 17);
-    overflow: hidden;
 }
 
 .wrapper {
@@ -136,21 +135,26 @@ main {
 }
 
 .curves .shape-fill {
-    fill: #FFFFFF;
+    fill: rgb(248, 248, 248);
 }
 
 /* Detailed info */
 
 .detailed-info {
     position: relative;
-    height: 100%;
-    padding: 2em;
+    flex-grow: 1;
+    padding: 1em 2em;
+    background-color: rgb(250, 250, 250);
+}
+
+.filters {
+    margin-bottom: 1em;
 }
 
 .filters ul {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 100%;
     max-width: 20rem;
     margin: 0 auto;
@@ -175,7 +179,7 @@ li a::after {
     height: 2px;
     background-color: rgb(56, 56, 56);
     border-radius: 20px;
-    transition: 0.2s;
+    transition: 0.25s;
 }
 
 li a:hover::after {
@@ -196,4 +200,55 @@ li a:hover::after {
     height: 2px;
     background-color: rgb(56, 56, 56);
     border-radius: 20px;
+}
+
+/* Cuurent weather */
+
+.current-weather-container {
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+    background: rgba(255, 0, 0, 0.185);
+}
+
+.weather div span:first-child {
+    font-weight: 900;
+}
+
+.weather > div > span {
+    display: block;
+}
+
+.weather {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0.5em;
+    margin: 0 auto;
+    padding: 0.5em;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 4px 3px 10px 0 rgba(17, 17, 17, 0.3);
+}
+
+#weather-icon {
+    width: 3rem;
+    height: 3rem;
+}
+
+@media screen and (min-width: 900px) {
+    #weather-icon {
+        justify-self: center;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .weather {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .weather {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

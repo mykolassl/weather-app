@@ -17,6 +17,8 @@ let countryName = document.getElementById("country-name");
 
 let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
 
+let data = {};
+
 // Set time and date based on utc offset
 
 function setTime(offset) {
@@ -48,7 +50,7 @@ setTime(7200)
 
 submitBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    
+
     if(cityInput.value == '') return;
 
     try {
@@ -56,7 +58,7 @@ submitBtn.addEventListener('click', async (e) => {
         cityName.innerText = name;
         countryName.innerText = regionNames.of(country);
 
-        const data = await getWeatherData(lat, lon);
+        data = await getWeatherData(lat, lon);
         setTime(data.timezone_offset);
 
         cityInput.value = ''; 
@@ -72,11 +74,23 @@ let links = document.querySelectorAll('.filters ul li a');
 
 links.forEach((el) => {
     el.addEventListener('click', () => {
-        let selected = document.getElementsByClassName('selected')[0];
-        
         if(el.classList.contains('selected')) return;
 
+        let selected = document.getElementsByClassName('selected')[0];
         selected.classList.remove('selected');
         el.classList.add('selected');
     })
 })
+
+// *************** TODO work with example response ************************
+
+// http://openweathermap.org/img/wn/10d@2x.png
+
+//Current temp
+console.log(Math.round(exampleRes.current.temp))
+
+//Feels like
+console.log(Math.round(exampleRes.current.feels_like))
+
+//Humidity
+console.log(`${Math.round(exampleRes.current.humidity)}%`)
