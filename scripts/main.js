@@ -16,7 +16,6 @@ let cityName = document.getElementById("city-name");
 let countryName = document.getElementById("country-name");
 
 let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
-
 let data = {};
 
 // Set time and date based on utc offset
@@ -30,21 +29,96 @@ function setTime(offset) {
 }
 
 async function getCoordinates(city) {
-    console.log('Fetching data..')
+    console.log('Fetching location..')
     const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${token}`);
     return res.json();
 }
 
 async function getWeatherData(lat, lon) {
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&appid=${token}`);
+    console.log('Fetching data..')
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,alerts&appid=${token}`);
     return res.json();
+}
+
+function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pressure, humidity, cloudiness }) {
+    let newContainer = document.createElement('div');
+    newContainer.classList.add('weather');
+
+    let fTimeCont = document.createElement('div');
+    let fTime = document.createElement('span');
+    let wIcon = document.createElement('img');
+    fTime.classList.add('forecast-time');
+    wIcon.classList.add('weather-icon');
+    wIcon.src = image;
+    fTime.innerText = `${time.getUTCHours()}:${time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes()}`;
+    fTimeCont.append(fTime, wIcon);
+
+    let tCont = document.createElement('div');
+    let tHead = document.createElement('span');
+    let t = document.createElement('span');
+    t.classList.add('temperature');
+    tHead.innerText = 'Temperature';
+    t.innerText = `${temp}C`;
+    tCont.append(tHead, t);
+
+    let ftCont = document.createElement('div');
+    let ftHead = document.createElement('span');
+    let ft = document.createElement('span');
+    ft.classList.add('feels-like');
+    ftHead.innerText = 'Feels like';
+    ft.innerText = `${feelTemp}C`;
+    ftCont.append(ftHead, ft);
+
+    let wsCont = document.createElement('div');
+    let wsHead = document.createElement('span');
+    let ws = document.createElement('span');
+    ws.classList.add('wind-speed');
+    wsHead.innerText = 'Wind speed';
+    ws.innerText = `${windSpeed}m/s`;
+    wsCont.append(wsHead, ws);
+
+    let wgCont = document.createElement('div');
+    let wgHead = document.createElement('span');
+    let wg = document.createElement('span');
+    wg.classList.add('wind-gust');
+    wgHead.innerText = 'Wind gust';
+    wg.innerText = `${windGust}m/s`;
+    wgCont.append(wgHead, wg);
+
+    let pCont = document.createElement('div');
+    let pHead = document.createElement('span');
+    let p = document.createElement('span');
+    p.classList.add('pressure');
+    pHead.innerText = 'Pressure';
+    p.innerText = `${pressure}hPa`;
+    pCont.append(pHead, p);
+
+    let hCont = document.createElement('div');
+    let hHead = document.createElement('span');
+    let h = document.createElement('span');
+    h.classList.add('wind-speed');
+    hHead.innerText = 'Humidity';
+    h.innerText = `${humidity}%`;
+    hCont.append(hHead, h);
+
+    let cCont = document.createElement('div');
+    let cHead = document.createElement('span');
+    let c = document.createElement('span');
+    c.classList.add('cloudiness');
+    cHead.innerText = 'Cloudiness';
+    c.innerText = `${cloudiness}%`;
+    cCont.append(cHead, c);
+
+    newContainer.append(fTimeCont, tCont, ftCont, wsCont, wgCont, pCont, hCont, cCont);
+
+    return newContainer
 }
 
 // Set the default position and time
 
 cityName.innerText = 'Vilnius';
 countryName.innerText = 'Lithuania';
-setTime(7200)
+setTime(7200);
 
 // Form submission
 
@@ -61,12 +135,30 @@ submitBtn.addEventListener('click', async (e) => {
         data = await getWeatherData(lat, lon);
         setTime(data.timezone_offset);
 
+        let weatherInfo = {
+            time: new Date((new Date().getTime() + data.current.dt) + (data.timezone_offset * 1000)),
+            image: `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`,
+            temp: Math.round(data.current.temp),
+            feelTemp: Math.round(data.current.feels_like),
+            windSpeed: data.current.wind_speed,
+            windGust: data.current.wind_gust,
+            pressure: data.current.pressure,
+            humidity: data.current.humidity,
+            cloudiness: data.current.clouds
+        };
+
+        console.log(data.current.dt);
+        
+        let weatherContainer = document.getElementsByClassName('weather-container')[0];
+        weatherContainer.appendChild(displayForecast(weatherInfo));
+
         cityInput.value = ''; 
     } catch {
         return alert('City not found');
     }
 
 })
+
 
 // Selecting weather data time
 
@@ -80,7 +172,6 @@ links.forEach((el) => {
         selected.classList.remove('selected');
         el.classList.add('selected');
     })
-})
-
+});
 
 // http://openweathermap.org/img/wn/10d@2x.png
