@@ -21,21 +21,19 @@ let data = {};
 // Set time and date based on utc offset
 
 function setTime(offset) {
-    const date = new Date();
-    const offsetDate = new Date(date.getTime() + (offset * 1000));
+    let date = new Date();
+    let offsetDate = new Date(date.getTime() + (offset * 1000));
 
     localTime.innerText = `${offsetDate.getUTCHours()}:${offsetDate.getUTCMinutes() < 10 ? '0' + offsetDate.getUTCMinutes() : offsetDate.getUTCMinutes()}`;
     localDate.innerText = offsetDate.toLocaleDateString(undefined, options);
 }
 
 async function getCoordinates(city) {
-    console.log('Fetching location..')
     const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${token}`);
     return res.json();
 }
 
 async function getWeatherData(lat, lon) {
-    console.log('Fetching data..')
     const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,alerts&appid=${token}`);
     return res.json();
 }
@@ -50,7 +48,7 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     fTime.classList.add('forecast-time');
     wIcon.classList.add('weather-icon');
     wIcon.src = image;
-    fTime.innerText = `${time.getUTCHours()}:${time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes()}`;
+    fTime.innerText = `${time.getUTCMonth() + 1}-${time.getUTCDate()}, ${time.getUTCHours()}:${time.getUTCMinutes() < 10 ? '0' + time.getUTCMinutes() : time.getUTCMinutes()}`;
     fTimeCont.append(fTime, wIcon);
 
     let tCont = document.createElement('div');
@@ -114,6 +112,14 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     return newContainer
 }
 
+function clearWeatherContainer() {
+    let weatherContainer = document.getElementsByClassName('weather-container')[0];
+
+    while(weatherContainer.firstChild) {
+        weatherContainer.removeChild(weatherContainer.firstChild)
+    }
+}
+
 // Set the default position and time
 
 cityName.innerText = 'Vilnius';
@@ -128,6 +134,7 @@ submitBtn.addEventListener('click', async (e) => {
     if(cityInput.value == '') return;
 
     try {
+        // Get information about location
         let [{ lat, lon, country, name }] = await getCoordinates(cityInput.value);
         cityName.innerText = name;
         countryName.innerText = regionNames.of(country);
@@ -135,19 +142,23 @@ submitBtn.addEventListener('click', async (e) => {
         data = await getWeatherData(lat, lon);
         setTime(data.timezone_offset);
 
+        // Setting weather data for location and displaying it
+        clearWeatherContainer();
+
+        let date = new Date(data.current.dt * 1000);
+        let time = new Date(date.getTime() + (data.timezone_offset * 1000));
+
         let weatherInfo = {
-            time: new Date((new Date().getTime() + data.current.dt) + (data.timezone_offset * 1000)),
+            time: time,
             image: `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`,
             temp: Math.round(data.current.temp),
             feelTemp: Math.round(data.current.feels_like),
             windSpeed: data.current.wind_speed,
-            windGust: data.current.wind_gust,
+            windGust: data.current.wind_gust ?? 0,
             pressure: data.current.pressure,
             humidity: data.current.humidity,
             cloudiness: data.current.clouds
         };
-
-        console.log(data.current.dt);
         
         let weatherContainer = document.getElementsByClassName('weather-container')[0];
         weatherContainer.appendChild(displayForecast(weatherInfo));
@@ -171,7 +182,72 @@ links.forEach((el) => {
         let selected = document.getElementsByClassName('selected')[0];
         selected.classList.remove('selected');
         el.classList.add('selected');
+
+        clearWeatherContainer();
+
+        if(el.innerText === 'Day') {
+            data.hourly.every((d) => {
+                let date = new Date(d.dt * 1000);
+                let time = new Date(date.getTime() + (data.timezone_offset * 1000));
+
+                if(time.getUTCHours() === 0) return false;
+
+                let weatherInfo = {
+                    time: time,
+                    image: `https://openweathermap.org/img/wn/${d.weather[0].icon}@2x.png` ?? '',
+                    temp: Math.round(d.temp),
+                    feelTemp: Math.round(d.feels_like),
+                    windSpeed: d.wind_speed,
+                    windGust: d.wind_gust ?? 0,
+                    pressure: d.pressure,
+                    humidity: d.humidity,
+                    cloudiness: d.clouds
+                }
+
+                let weatherContainer = document.getElementsByClassName('weather-container')[0];
+                weatherContainer.appendChild(displayForecast(weatherInfo));
+
+                return true;
+            });
+        } else if(el.innerText === 'Week') {
+            data.daily.forEach((d) => {
+                let date = new Date(d.dt * 1000);
+                let time = new Date(date.getTime() + (data.timezone_offset * 1000));
+
+                let weatherInfo = {
+                    time: time,
+                    image: `https://openweathermap.org/img/wn/${d.weather[0].icon}@2x.png` ?? '',
+                    temp: Math.round(d.temp.day),
+                    feelTemp: Math.round(d.feels_like.day),
+                    windSpeed: d.wind_speed,
+                    windGust: d.wind_gust ?? 0,
+                    pressure: d.pressure,
+                    humidity: d.humidity,
+                    cloudiness: d.clouds
+                }
+
+                let weatherContainer = document.getElementsByClassName('weather-container')[0];
+                weatherContainer.appendChild(displayForecast(weatherInfo));
+            });
+        } else  {
+            let date = new Date(data.current.dt * 1000);
+            let time = new Date(date.getTime() + (data.timezone_offset * 1000));
+    
+            let weatherInfo = {
+                time: time,
+                image: `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`,
+                temp: Math.round(data.current.temp),
+                feelTemp: Math.round(data.current.feels_like),
+                windSpeed: data.current.wind_speed,
+                windGust: data.current.wind_gust ?? 0,
+                pressure: data.current.pressure,
+                humidity: data.current.humidity,
+                cloudiness: data.current.clouds
+            };
+            
+            let weatherContainer = document.getElementsByClassName('weather-container')[0];
+            weatherContainer.appendChild(displayForecast(weatherInfo));
+        }
+
     })
 });
-
-// http://openweathermap.org/img/wn/10d@2x.png
