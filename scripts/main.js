@@ -45,7 +45,6 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     let fTimeCont = document.createElement('div');
     let fTime = document.createElement('span');
     let wIcon = document.createElement('img');
-    fTime.classList.add('forecast-time');
     wIcon.classList.add('weather-icon');
     wIcon.src = image;
     fTime.innerText = `${time.getUTCMonth() + 1}-${time.getUTCDate()}, ${time.getUTCHours()}:${time.getUTCMinutes() < 10 ? '0' + time.getUTCMinutes() : time.getUTCMinutes()}`;
@@ -54,7 +53,6 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     let tCont = document.createElement('div');
     let tHead = document.createElement('span');
     let t = document.createElement('span');
-    t.classList.add('temperature');
     tHead.innerText = 'Temperature';
     t.innerText = `${temp}C`;
     tCont.append(tHead, t);
@@ -62,7 +60,6 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     let ftCont = document.createElement('div');
     let ftHead = document.createElement('span');
     let ft = document.createElement('span');
-    ft.classList.add('feels-like');
     ftHead.innerText = 'Feels like';
     ft.innerText = `${feelTemp}C`;
     ftCont.append(ftHead, ft);
@@ -70,7 +67,6 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     let wsCont = document.createElement('div');
     let wsHead = document.createElement('span');
     let ws = document.createElement('span');
-    ws.classList.add('wind-speed');
     wsHead.innerText = 'Wind speed';
     ws.innerText = `${windSpeed}m/s`;
     wsCont.append(wsHead, ws);
@@ -78,7 +74,6 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     let wgCont = document.createElement('div');
     let wgHead = document.createElement('span');
     let wg = document.createElement('span');
-    wg.classList.add('wind-gust');
     wgHead.innerText = 'Wind gust';
     wg.innerText = `${windGust}m/s`;
     wgCont.append(wgHead, wg);
@@ -86,7 +81,6 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     let pCont = document.createElement('div');
     let pHead = document.createElement('span');
     let p = document.createElement('span');
-    p.classList.add('pressure');
     pHead.innerText = 'Pressure';
     p.innerText = `${pressure}hPa`;
     pCont.append(pHead, p);
@@ -94,7 +88,6 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     let hCont = document.createElement('div');
     let hHead = document.createElement('span');
     let h = document.createElement('span');
-    h.classList.add('wind-speed');
     hHead.innerText = 'Humidity';
     h.innerText = `${humidity}%`;
     hCont.append(hHead, h);
@@ -102,7 +95,6 @@ function displayForecast({ time, image, temp, feelTemp, windSpeed, windGust, pre
     let cCont = document.createElement('div');
     let cHead = document.createElement('span');
     let c = document.createElement('span');
-    c.classList.add('cloudiness');
     cHead.innerText = 'Cloudiness';
     c.innerText = `${cloudiness}%`;
     cCont.append(cHead, c);
